@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Sieve.Models;
 using Sieve.Services;
 
-namespace ApiMikolajekXD.Services;
+namespace Leads.Services.LeadServices;
 
 public class LeadService : ILeadService
 {

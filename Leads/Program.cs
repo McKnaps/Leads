@@ -1,11 +1,14 @@
 using Leads.Data;
 using Leads.Models;
 using Leads.Services;
+using Leads.Services.AgentServices;
+using Leads.Services.LeadServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Sieve.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -16,11 +19,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<SieveProcessor>();
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAgentService, AgentService>();
+builder.Services.AddScoped<ILeadService, LeadService>();
 
 var app = builder.Build();
 
@@ -38,6 +40,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapDefaultControllerRoute();
+app.MapControllers();
 
 app.Run();
 

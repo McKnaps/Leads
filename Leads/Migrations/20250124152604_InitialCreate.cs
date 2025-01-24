@@ -21,8 +21,7 @@ namespace Leads.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    OperatingArea = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    OperatingArea = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,50 +55,10 @@ namespace Leads.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    AgentId = table.Column<int>(type: "integer", nullable: true),
-                    UserName = table.Column<string>(type: "text", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "text", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_User_Agents_AgentId",
-                        column: x => x.AgentId,
-                        principalTable: "Agents",
-                        principalColumn: "AgentId",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Leads_AgentId",
                 table: "Leads",
                 column: "AgentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_AgentId",
-                table: "User",
-                column: "AgentId",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -107,9 +66,6 @@ namespace Leads.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Leads");
-
-            migrationBuilder.DropTable(
-                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Agents");

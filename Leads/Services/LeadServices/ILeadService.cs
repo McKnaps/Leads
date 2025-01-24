@@ -3,7 +3,7 @@ using Leads.Models;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
 
-namespace Leads.Services;
+namespace Leads.Services.LeadServices;
 
 public interface ILeadService
 {

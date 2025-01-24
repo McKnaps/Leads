@@ -46,10 +46,6 @@ namespace Leads.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("AgentId");
 
                     b.ToTable("Agents");
@@ -100,72 +96,6 @@ namespace Leads.Migrations
                     b.ToTable("Leads");
                 });
 
-            modelBuilder.Entity("Leads.Models.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("AgentId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgentId")
-                        .IsUnique();
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Leads.Models.Lead", b =>
                 {
                     b.HasOne("Leads.Models.Agent", "Agent")
@@ -177,22 +107,9 @@ namespace Leads.Migrations
                     b.Navigation("Agent");
                 });
 
-            modelBuilder.Entity("Leads.Models.User", b =>
-                {
-                    b.HasOne("Leads.Models.Agent", "Agent")
-                        .WithOne("User")
-                        .HasForeignKey("Leads.Models.User", "AgentId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Agent");
-                });
-
             modelBuilder.Entity("Leads.Models.Agent", b =>
                 {
                     b.Navigation("Leads");
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

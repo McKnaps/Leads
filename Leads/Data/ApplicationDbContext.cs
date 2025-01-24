@@ -12,13 +12,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
-        modelBuilder.Entity<User>()
-            .HasOne(u => u.Agent)
-            .WithOne(a => a.User)
-            .HasForeignKey<User>(u => u.AgentId)
-            .OnDelete(DeleteBehavior.SetNull); 
-        
         modelBuilder.Entity<Lead>()
             .HasOne(l => l.Agent)
             .WithMany(a => a.Leads)

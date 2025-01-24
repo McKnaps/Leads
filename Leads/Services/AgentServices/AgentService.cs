@@ -1,4 +1,3 @@
-
 using AutoMapper;
 using Leads.Data;
 using Leads.DTOs.AgentDTOs;
@@ -8,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Sieve.Models;
 using Sieve.Services;
 
-namespace Leads.Services;
+namespace Leads.Services.AgentServices;
 
 public class AgentService : IAgentService
 {
