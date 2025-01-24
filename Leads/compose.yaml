@@ -1,0 +1,13 @@
+﻿version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: gu(9UZCmx@#LS7r[qWF{ns
+      POSTGRES_DB: leads_db
+    ports:
+      - "5432:5432"
+  

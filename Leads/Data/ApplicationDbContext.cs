@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Leads.Data;
 
-public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
+public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
