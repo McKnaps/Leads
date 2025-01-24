@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Leads.Data;
 using Leads.Models;
 using Leads.Services;
@@ -23,6 +24,11 @@ builder.Services.AddScoped<SieveProcessor>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<ILeadService, LeadService>();
+builder.Services.AddControllers()
+    .AddFluentValidation(config =>
+    {
+        config.RegisterValidatorsFromAssemblyContaining<Program>();
+    });
 
 var app = builder.Build();
 
