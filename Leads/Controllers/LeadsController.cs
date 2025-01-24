@@ -1,6 +1,7 @@
 using Leads.DTOs.LeadDTOs;
 using Leads.Services;
 using Leads.Services.LeadServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
 
@@ -16,9 +17,9 @@ public class LeadController : ControllerBase
     {
         _leadService = leadService;
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpGet("agent/{agentId}")]
-    public async Task<ActionResult> GetLeadsByAgentId(int agentId, [FromQuery] SieveModel sieveModel)
+    public async Task<ActionResult> GetLeadsByAgentId(Guid agentId, [FromQuery] SieveModel sieveModel)
     {
         var leads = await _leadService.GetLeadsByAgentIdAsync(agentId, sieveModel);
 
@@ -27,7 +28,24 @@ public class LeadController : ControllerBase
 
         return Ok(leads);
     }
+    
+    [Authorize(Roles = "app-admin")]
+    [HttpGet("agent/leads")]
+    public async Task<ActionResult> GetLeadsByAgentId([FromQuery] SieveModel sieveModel)
+    {
 
+        var agentSubClaim = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+        if (agentSubClaim == null) return BadRequest("User ID not found in token");
+        Guid agentId = Guid.TryParse(agentSubClaim, out var id) ? id : Guid.Empty;
+        
+        var leads = await _leadService.GetLeadsByAgentIdAsync(agentId, sieveModel);
+        if (leads == null || !leads.Any()) 
+            return NotFound();
+
+        return Ok(leads);
+    }
+    
+    [Authorize(Roles = "app-admin")]
     [HttpPost]
     public async Task<ActionResult> CreateLead(LeadCreateDTO leadCreateDto)
     {
@@ -36,18 +54,18 @@ public class LeadController : ControllerBase
 
         return CreatedAtAction(nameof(GetLeadsById), new { leadId = lead.LeadId }, lead);
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpGet("lead/{leadId}")]
-    public async Task<ActionResult> GetLeadsById(int leadId)
+    public async Task<ActionResult> GetLeadsById(Guid leadId)
     {
         var lead = await _leadService.GetLeadById(leadId);
         if (lead == null) return NotFound();
 
         return Ok(lead);
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpDelete]
-    public async Task<ActionResult> RemoveLeadById(int id)
+    public async Task<ActionResult> RemoveLeadById(Guid id)
     {
         await _leadService.RemoveLeadById(id);
         return Ok();
