@@ -39,6 +39,7 @@ public class LeadController : ControllerBase
 
         return CreatedAtAction(nameof(GetLeadsById), new { leadId = lead.LeadId }, lead);
     }
+    
     [Authorize(Roles = "app-admin")]
     [HttpGet("lead/{leadId}")]
     public async Task<ActionResult> GetLeadsById(int leadId)
@@ -48,6 +49,7 @@ public class LeadController : ControllerBase
 
         return Ok(lead);
     }
+    
     [Authorize(Roles = "app-admin")]
     [HttpDelete]
     public async Task<ActionResult> RemoveLeadById(int id)
