@@ -26,18 +26,18 @@ builder.Services.AddAuthentication(options =>
 }).AddJwtBearer(options =>
 {
     options.Authority = "http://localhost:8080/realms/leads";
-    options.Audience = "lead-app";
+    options.Audience = "audience resolve";
     options.SaveToken = true;
     options.RequireHttpsMetadata = false;
     options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = "http://localhost:8080/realms/leads",
-        ValidAudience = "lead-app",
+        ValidAudience = "audience resolve",
         RoleClaimType = "permission", 
     };
 });
