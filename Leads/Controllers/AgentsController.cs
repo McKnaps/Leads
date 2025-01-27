@@ -37,15 +37,15 @@ public class AgentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAgent(AgentCreateDTO agentCreateDto)
+    public async Task<IActionResult> CreateAgent(AgentDTO agentDTO)
     {
-        return Ok(await _agentService.CreateAgentAsync(agentCreateDto));
+        return Ok(await _agentService.CreateAgentAsync(agentDTO));
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAgent(Guid id, AgentCreateDTO agentCreateDto)
+    public async Task<IActionResult> UpdateAgent(Guid id, AgentUpdateDTO agentUpdateDto)
     {
-        var updatedAgent = await _agentService.UpdateAgentAsync(id, agentCreateDto);
+        var updatedAgent = await _agentService.UpdateAgentAsync(id, agentUpdateDto);
         if (updatedAgent == null) return NotFound();
 
         return NoContent();

@@ -6,5 +6,5 @@ public class LeadCreateDTO
     public string Location { get; set; }
     public decimal Price { get; set; }
     public string OwnerContact { get; set; }
-    public int AgentId { get; set; }
+    public Guid AgentId { get; set; }
 }

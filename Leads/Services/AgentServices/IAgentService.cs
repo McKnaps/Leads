@@ -8,8 +8,8 @@ public interface IAgentService
 {
     Task<IEnumerable<AgentDTO>> GetAgentsAsync(SieveModel sieveModel);
     Task<AgentDTO> GetAgentByIdAsync(Guid id);
-    Task<Agent> CreateAgentAsync(AgentCreateDTO agentCreateDto);
-    Task<Agent> UpdateAgentAsync(Guid id, AgentCreateDTO agentCreateDto);
+    Task<Agent> CreateAgentAsync(AgentDTO agentUpdateDto);
+    Task<Agent> UpdateAgentAsync(Guid id, AgentUpdateDTO agentUpdateDto);
     Task<bool> DeleteAgentAsync(Guid id);
     Task<AgentDTO> GetAgentByEmailAsync(string email);
 }

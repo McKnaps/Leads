@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Leads.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigrations : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +15,7 @@ namespace Leads.Migrations
                 name: "Agents",
                 columns: table => new
                 {
-                    AgentId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AgentId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
@@ -32,8 +30,7 @@ namespace Leads.Migrations
                 name: "Leads",
                 columns: table => new
                 {
-                    LeadId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    LeadId = table.Column<Guid>(type: "uuid", nullable: false),
                     PropertyType = table.Column<int>(type: "integer", nullable: false),
                     Location = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -42,7 +39,7 @@ namespace Leads.Migrations
                     ExpiresAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     RejectionReason = table.Column<string>(type: "text", nullable: false),
-                    AgentId = table.Column<int>(type: "integer", nullable: false)
+                    AgentId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {

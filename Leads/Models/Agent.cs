@@ -11,8 +11,6 @@ public class Agent
     [Sieve(CanFilter = true, CanSort = true)]
     public string LastName { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]
-    public string Login { get; set; }
-    public string Password { get; set; }
     public string Email { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]
     public string OperatingArea { get; set; }

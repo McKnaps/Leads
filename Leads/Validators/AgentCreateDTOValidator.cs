@@ -4,7 +4,7 @@ using Leads.DTOs.AgentDTOs;
 
 namespace Leads.Validators;
 
-public class AgentCreateDTOValidator : AbstractValidator<AgentCreateDTO>
+public class AgentCreateDTOValidator : AbstractValidator<AgentUpdateDTO>
 {
     public AgentCreateDTOValidator()
     {

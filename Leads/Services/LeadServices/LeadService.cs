@@ -1,4 +1,5 @@
 
+using System.Security.Claims;
 using AutoMapper;
 using Leads.Data;
 using Leads.DTOs.AgentDTOs;
@@ -83,4 +84,26 @@ public class LeadService : ILeadService
         await _context.SaveChangesAsync();
         return removeLead;
     }
+    public async Task<IEnumerable<LeadDTO>> GetLeadsForCurrentAgentAsync(ClaimsPrincipal user, SieveModel sieveModel)
+    {
+        var subClaim = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+        if (string.IsNullOrEmpty(subClaim))
+        {
+            throw new UnauthorizedAccessException("Nie udało się odczytać identyfikatora użytkownika z tokena.");
+        }
+
+        if (!Guid.TryParse(subClaim, out var agentId))
+        {
+            throw new ArgumentException("Nieprawidłowy identyfikator użytkownika w tokenie.");
+        }
+        
+        var query = _context.Leads.Where(lead => lead.AgentId == agentId).AsQueryable();
+
+        query = _sieveProcessor.Apply(sieveModel, query);
+        var leads = await query.ToListAsync();
+
+        return _mapper.Map<IEnumerable<LeadDTO>>(leads);
+    }
+
+    
 }

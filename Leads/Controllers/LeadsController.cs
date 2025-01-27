@@ -57,4 +57,28 @@ public class LeadController : ControllerBase
         await _leadService.RemoveLeadById(id);
         return Ok();
     }
+    
+    [Authorize(Roles = "app-agent")]
+    [HttpGet("my-leads")]
+    public async Task<ActionResult> GetMyLeads([FromQuery] SieveModel sieveModel)
+    {
+        try
+        {
+            var leads = await _leadService.GetLeadsForCurrentAgentAsync(User, sieveModel);
+            if (leads == null || !leads.Any())
+            {
+                return NotFound("Nie znaleziono leadów dla użytkownika.");
+            }
+
+            return Ok(leads);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

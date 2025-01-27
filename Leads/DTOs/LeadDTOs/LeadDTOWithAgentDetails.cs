@@ -4,7 +4,7 @@ namespace Leads.DTOs.LeadDTOs;
 
 public class LeadDTOWithAgentDetails
 {
-    public int LeadId { get; set; }
+    public Guid LeadId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ExpiresAt { get; set; }
     public PropertyType PropertyType { get; set; }
@@ -12,7 +12,7 @@ public class LeadDTOWithAgentDetails
     public decimal Price { get; set; }
     public string OwnerContact { get; set; }
     public string? RejectionReason { get; set; }
-    public int AgentId { get; set; }
+    public Guid AgentId { get; set; }
     public LeadStatus Status { get; set; }
     public AgentDTO AgentDto { get; set; }
 }

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Leads.DTOs.LeadDTOs;
 using Leads.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,4 +12,6 @@ public interface ILeadService
     Task<IEnumerable<LeadDTO>> GetLeadsByAgentIdAsync(Guid agentId, [FromQuery] SieveModel sieveModel);
     Task<LeadDTOWithAgentDetails> GetLeadById(Guid id);
     Task<Lead> RemoveLeadById(Guid id);
+    Task<IEnumerable<LeadDTO>> GetLeadsForCurrentAgentAsync(ClaimsPrincipal user, SieveModel sieveModel);
+
 }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Leads.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250124231516_initial-migrations")]
-    partial class initialmigrations
+    [Migration("20250127155235_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace Leads.Migrations
 
             modelBuilder.Entity("Leads.Models.Agent", b =>
                 {
-                    b.Property<int>("AgentId")
+                    b.Property<Guid>("AgentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AgentId"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -56,14 +54,12 @@ namespace Leads.Migrations
 
             modelBuilder.Entity("Leads.Models.Lead", b =>
                 {
-                    b.Property<int>("LeadId")
+                    b.Property<Guid>("LeadId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LeadId"));
-
-                    b.Property<int>("AgentId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

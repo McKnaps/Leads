@@ -9,8 +9,9 @@ public class Profiles : AutoMapper.Profile
     public Profiles()
     {
         CreateMap<Agent, AgentDTO>();
-        CreateMap<Agent, AgentCreateDTO>();
-        CreateMap<AgentCreateDTO, Agent>();
+        CreateMap<AgentDTO, Agent>();
+        CreateMap<Agent, AgentUpdateDTO>();
+        CreateMap<AgentUpdateDTO, Agent>();
         CreateMap<Lead, LeadDTOWithAgentDetails>();
         CreateMap<Lead, LeadCreateDTO>();
         CreateMap<Lead, LeadDTO>();
