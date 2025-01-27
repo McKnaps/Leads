@@ -2,6 +2,7 @@ using System.Collections;
 using AutoMapper;
 using Leads.DTOs.AgentDTOs;
 using Leads.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
 using Sieve.Services;
@@ -19,14 +20,14 @@ public class AgentsController : ControllerBase
         _agentService = agentService;
     }
 
-
+    [Authorize(Roles = "app-admin")]
     [HttpGet]
     public async Task<IActionResult> GetAgents([FromQuery] SieveModel sieveModel)
     {
         var agents = await _agentService.GetAgentsAsync(sieveModel);
         return Ok(agents);
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAgentById(Guid id)
     {
@@ -35,13 +36,13 @@ public class AgentsController : ControllerBase
 
         return Ok(agent);
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpPost]
     public async Task<IActionResult> CreateAgent(AgentDTO agentDTO)
     {
         return Ok(await _agentService.CreateAgentAsync(agentDTO));
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAgent(Guid id, AgentUpdateDTO agentUpdateDto)
     {
@@ -50,7 +51,7 @@ public class AgentsController : ControllerBase
 
         return NoContent();
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAgent(Guid id)
     {
@@ -59,7 +60,7 @@ public class AgentsController : ControllerBase
 
         return NoContent();
     }
-
+    [Authorize(Roles = "app-admin")]
     [HttpGet("by-email")]
     public async Task<IActionResult> GetAgentByEmail([FromQuery] string email)
     {
