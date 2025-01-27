@@ -4,7 +4,7 @@ namespace Leads.Models;
 
 public class Lead
 {
-    public int LeadId { get; set; }
+    public Guid LeadId { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]
     public PropertyType PropertyType { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]
@@ -18,6 +18,6 @@ public class Lead
     [Sieve(CanFilter = true, CanSort = true)]
     public LeadStatus Status { get; set; } 
     public string RejectionReason { get; set; }
-    public int AgentId { get; set; }
+    public Guid AgentId { get; set; }
     public Agent Agent { get; set; }
 }

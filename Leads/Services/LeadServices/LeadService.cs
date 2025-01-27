@@ -36,7 +36,7 @@ public class LeadService : ILeadService
         return lead;
     }
 
-    public async Task<IEnumerable<LeadDTO>> GetLeadsByAgentIdAsync(int agentId, [FromQuery] SieveModel sieveModel)
+    public async Task<IEnumerable<LeadDTO>> GetLeadsByAgentIdAsync(Guid agentId, [FromQuery] SieveModel sieveModel)
     {
         var query = _context.Leads.Where(lead => lead.AgentId == agentId).AsQueryable();
         
@@ -46,7 +46,7 @@ public class LeadService : ILeadService
         return _mapper.Map<IEnumerable<LeadDTO>>(leads);
     }
 
-    public async Task<LeadDTOWithAgentDetails> GetLeadById(int id)
+    public async Task<LeadDTOWithAgentDetails> GetLeadById(Guid id)
     {
         var lead = await _context.Leads.FirstOrDefaultAsync(x => x.LeadId == id);
         if (lead == null)
@@ -76,7 +76,7 @@ public class LeadService : ILeadService
     }
 
 
-    public async Task<Lead> RemoveLeadById(int id)
+    public async Task<Lead> RemoveLeadById(Guid id)
     {
         var removeLead = await _context.Leads.FindAsync(id);
         _context.Leads.Remove(removeLead);

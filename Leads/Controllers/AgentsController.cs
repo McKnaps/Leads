@@ -28,7 +28,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAgentById(int id)
+    public async Task<IActionResult> GetAgentById(Guid id)
     {
         var agent = await _agentService.GetAgentByIdAsync(id);
         if (agent == null) return NotFound();
@@ -43,7 +43,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAgent(int id, AgentCreateDTO agentCreateDto)
+    public async Task<IActionResult> UpdateAgent(Guid id, AgentCreateDTO agentCreateDto)
     {
         var updatedAgent = await _agentService.UpdateAgentAsync(id, agentCreateDto);
         if (updatedAgent == null) return NotFound();
@@ -52,7 +52,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAgent(int id)
+    public async Task<IActionResult> DeleteAgent(Guid id)
     {
         var result = await _agentService.DeleteAgentAsync(id);
         if (!result) return NotFound();

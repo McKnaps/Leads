@@ -33,7 +33,7 @@ public class AgentService : IAgentService
         return _mapper.Map<IEnumerable<AgentDTO>>(agents);
     }
 
-    public async Task<AgentDTO> GetAgentByIdAsync(int id)
+    public async Task<AgentDTO> GetAgentByIdAsync(Guid id)
     {
         var agent = await _context.Agents.FindAsync(id);
         return _mapper.Map<AgentDTO>(agent);
@@ -49,7 +49,7 @@ public class AgentService : IAgentService
         return agent;
     }
 
-    public async Task<Agent> UpdateAgentAsync(int id, AgentCreateDTO agentCreateDto)
+    public async Task<Agent> UpdateAgentAsync(Guid id, AgentCreateDTO agentCreateDto)
     {
         var existingAgent = await _context.Agents.FindAsync(id);
         if (existingAgent == null) return null;
@@ -61,7 +61,7 @@ public class AgentService : IAgentService
         return existingAgent;
     }
 
-    public async Task<bool> DeleteAgentAsync(int id)
+    public async Task<bool> DeleteAgentAsync(Guid id)
     {
         var agent = await _context.Agents.FindAsync(id);
         if (agent == null) return false;

@@ -5,7 +5,7 @@ namespace Leads.Models;
 public class Agent
 {
     [Sieve(CanFilter = true, CanSort = true)]
-    public int AgentId { get; set; }
+    public Guid AgentId { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]
     public string FirstName { get; set; }
     [Sieve(CanFilter = true, CanSort = true)]

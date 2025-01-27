@@ -7,9 +7,9 @@ namespace Leads.Services;
 public interface IAgentService
 {
     Task<IEnumerable<AgentDTO>> GetAgentsAsync(SieveModel sieveModel);
-    Task<AgentDTO> GetAgentByIdAsync(int id);
+    Task<AgentDTO> GetAgentByIdAsync(Guid id);
     Task<Agent> CreateAgentAsync(AgentCreateDTO agentCreateDto);
-    Task<Agent> UpdateAgentAsync(int id, AgentCreateDTO agentCreateDto);
-    Task<bool> DeleteAgentAsync(int id);
+    Task<Agent> UpdateAgentAsync(Guid id, AgentCreateDTO agentCreateDto);
+    Task<bool> DeleteAgentAsync(Guid id);
     Task<AgentDTO> GetAgentByEmailAsync(string email);
 }

@@ -8,7 +8,7 @@ namespace Leads.Services.LeadServices;
 public interface ILeadService
 {
     Task<Lead> CreateLeadAsync(LeadCreateDTO leadCreateDto);
-    Task<IEnumerable<LeadDTO>> GetLeadsByAgentIdAsync(int agentId, [FromQuery] SieveModel sieveModel);
-    Task<LeadDTOWithAgentDetails> GetLeadById(int id);
-    Task<Lead> RemoveLeadById(int id);
+    Task<IEnumerable<LeadDTO>> GetLeadsByAgentIdAsync(Guid agentId, [FromQuery] SieveModel sieveModel);
+    Task<LeadDTOWithAgentDetails> GetLeadById(Guid id);
+    Task<Lead> RemoveLeadById(Guid id);
 }
