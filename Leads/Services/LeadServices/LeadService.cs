@@ -104,7 +104,7 @@ public class LeadService : ILeadService
 
         return _mapper.Map<IEnumerable<LeadDTO>>(leads);
     }
-    public async Task<LeadDTO> UpdateLeadStatusAsync(Guid leadId, LeadStatus newStatus, ClaimsPrincipal user)
+    public async Task<LeadDTO> UpdateLeadStatusAsync(Guid leadId, LeadStatus newStatus, ClaimsPrincipal user, string rejectionReason = null)
     {
         var lead = await _context.Leads.FirstOrDefaultAsync(x => x.LeadId == leadId);
         if (lead == null)
@@ -125,10 +125,20 @@ public class LeadService : ILeadService
         
         if (lead.AgentId != agentId)
         {
-            throw new UnauthorizedAccessException("Admin nie ma uprawnień do zmiany statusu tego leada.");
+            throw new UnauthorizedAccessException("Agent nie ma uprawnień do zmiany statusu tego leada.");
+        }
+        
+        if (newStatus == LeadStatus.Odrzucony && string.IsNullOrEmpty(rejectionReason))
+        {
+            throw new ArgumentException("Powód odrzucenia jest wymagany, gdy status leada jest 'Odrzucony'.");
         }
         
         lead.Status = newStatus;
+        
+        if (newStatus == LeadStatus.Odrzucony)
+        {
+            lead.RejectionReason = rejectionReason;
+        }
         
         _context.Leads.Update(lead);
         await _context.SaveChangesAsync();
@@ -137,4 +147,5 @@ public class LeadService : ILeadService
     
         return leadDto;
     }
+
 }

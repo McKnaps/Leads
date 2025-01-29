@@ -13,5 +13,6 @@ public interface ILeadService
     Task<LeadDTOWithAgentDetails> GetLeadById(Guid id);
     Task<Lead> RemoveLeadById(Guid id);
     Task<IEnumerable<LeadDTO>> GetLeadsForCurrentAgentAsync(ClaimsPrincipal user, SieveModel sieveModel);
-    Task<LeadDTO> UpdateLeadStatusAsync(Guid leadId, LeadStatus newStatus, ClaimsPrincipal user);
+
+    Task<LeadDTO> UpdateLeadStatusAsync(Guid leadId, LeadStatus newStatus, ClaimsPrincipal user, string rejectionReason = null);
 }

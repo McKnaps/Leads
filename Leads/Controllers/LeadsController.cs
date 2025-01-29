@@ -83,20 +83,24 @@ public class LeadController : ControllerBase
     }
     [Authorize(Roles = "app-agent")]
     [HttpPut("leads/{leadId}/status")]
-    public async Task<IActionResult> UpdateLeadStatus(Guid leadId, LeadStatus newStatus)
+    public async Task<IActionResult> UpdateLeadStatus(Guid leadId, LeadStatus newStatus, [FromBody] string rejectionReason = null)
     {
         try
         {
-            var updatedLead = await _leadService.UpdateLeadStatusAsync(leadId, newStatus, User);
+            var updatedLead = await _leadService.UpdateLeadStatusAsync(leadId, newStatus, User, rejectionReason);
             return Ok(updatedLead);
         }
-        catch (UnauthorizedAccessException ex)
+        catch (ArgumentException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (KeyNotFoundException ex)
         {
             return NotFound(ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
         }
         catch (Exception ex)
         {
