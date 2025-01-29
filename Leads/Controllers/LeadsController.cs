@@ -81,4 +81,26 @@ public class LeadController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    [Authorize(Roles = "app-agent")]
+    [HttpPut("leads/{leadId}/status")]
+    public async Task<IActionResult> UpdateLeadStatus(Guid leadId, LeadStatus newStatus)
+    {
+        try
+        {
+            var updatedLead = await _leadService.UpdateLeadStatusAsync(leadId, newStatus, User);
+            return Ok(updatedLead);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 }

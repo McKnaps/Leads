@@ -104,6 +104,37 @@ public class LeadService : ILeadService
 
         return _mapper.Map<IEnumerable<LeadDTO>>(leads);
     }
+    public async Task<LeadDTO> UpdateLeadStatusAsync(Guid leadId, LeadStatus newStatus, ClaimsPrincipal user)
+    {
+        var lead = await _context.Leads.FirstOrDefaultAsync(x => x.LeadId == leadId);
+        if (lead == null)
+        {
+            throw new KeyNotFoundException($"Lead with ID {leadId} was not found.");
+        }
+        
+        var subClaim = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+        if (string.IsNullOrEmpty(subClaim))
+        {
+            throw new UnauthorizedAccessException("Nie udało się odczytać identyfikatora użytkownika z tokena.");
+        }
 
+        if (!Guid.TryParse(subClaim, out var agentId))
+        {
+            throw new ArgumentException("Nieprawidłowy identyfikator użytkownika w tokenie.");
+        }
+        
+        if (lead.AgentId != agentId)
+        {
+            throw new UnauthorizedAccessException("Admin nie ma uprawnień do zmiany statusu tego leada.");
+        }
+        
+        lead.Status = newStatus;
+        
+        _context.Leads.Update(lead);
+        await _context.SaveChangesAsync();
+        
+        var leadDto = _mapper.Map<LeadDTO>(lead);
     
+        return leadDto;
+    }
 }
